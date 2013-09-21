@@ -14,7 +14,7 @@ Readonly::Scalar my $EMPTY_STR => q{};
 Readonly::Scalar my $LINE_SIZE => 79;
 
 # Version.
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 # Constructor.
 sub new {
@@ -95,7 +95,8 @@ sub indent {
 	}
 
 	# Add other data to @data array.
-	if ($second || $second !~ /^\s*$/ms) {
+	$second =~ s/\s+$//ms;
+	if ($second) {
 		push @data, $second;
 	}
 
@@ -215,6 +216,6 @@ BSD license.
 
 =head1 VERSION
 
-0.01
+0.02
 
 =cut

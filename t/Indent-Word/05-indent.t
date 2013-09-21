@@ -4,7 +4,8 @@ use warnings;
 
 # Modules.
 use Indent::Word;
-use Test::More 'tests' => 7;
+use Test::More 'tests' => 11;
+use Test::NoWarnings;
 
 # Test.
 my $obj = Indent::Word->new(
@@ -65,3 +66,39 @@ $obj = Indent::Word->new(
 );
 $ret = $obj->indent('word1 word2 word3');
 is($ret, "word1\n".$next_indent."word2\n".$next_indent."word3");
+
+# Test.
+$obj = Indent::Word->new(
+	'next_indent' => '',
+	'line_size' => 2,
+);
+@ret = $obj->indent('aa    ');
+is_deeply(
+	\@ret,
+	[
+		'aa',
+	],
+	'Word with equal characters as line_size and trailing whitespace.',
+);
+
+# Test
+$obj = Indent::Word->new(
+	'next_indent' => '',
+	'line_size' => 1,
+);
+@ret = $obj->indent('aa    ');
+is_deeply(
+	\@ret,
+	[
+		'aa',
+	],
+	'Word with more characters than line_size and trailing whitespace.',
+);
+
+# Test.
+@ret = $obj->indent('');
+is_deeply(
+	\@ret,
+	[],
+	'No string to indent.',
+);
